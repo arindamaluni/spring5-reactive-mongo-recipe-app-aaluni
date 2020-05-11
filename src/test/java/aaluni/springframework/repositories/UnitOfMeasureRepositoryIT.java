@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import aaluni.springframework.bootstrap.RecipeBootstrap;
 import aaluni.springframework.domain.UnitOfMeasure;
-
+import aaluni.springframework.repositories.reactive.UnitOfMeasureReactiveRepository;
 
 import java.util.Optional;
 
@@ -25,6 +25,8 @@ public class UnitOfMeasureRepositoryIT {
     CategoryRepository categoryRepository;
     @Autowired
     RecipeRepository recipeRepository;
+    @Autowired
+    UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
 
     @Before
     public void setUp() throws Exception {
@@ -39,6 +41,7 @@ public class UnitOfMeasureRepositoryIT {
     public void findByDescription() throws Exception {
 
         Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
+        System.out.println(unitOfMeasureReactiveRepository.count().block()); 
 
         assertEquals("Teaspoon", uomOptional.get().getDescription());
     }

@@ -1,6 +1,8 @@
 package aaluni.springframework.bootstrap;
 
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -10,6 +12,7 @@ import aaluni.springframework.domain.*;
 import aaluni.springframework.repositories.CategoryRepository;
 import aaluni.springframework.repositories.RecipeRepository;
 import aaluni.springframework.repositories.UnitOfMeasureRepository;
+import aaluni.springframework.repositories.reactive.UnitOfMeasureReactiveRepository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -23,6 +26,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private final CategoryRepository categoryRepository;
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
+    
+    @Autowired
+    private UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository; 
 
     public RecipeBootstrap(CategoryRepository categoryRepository,
                            RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
@@ -38,6 +44,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         loadUom();
         recipeRepository.saveAll(getRecipes());
         log.debug("Loading Bootstrap Data");
+        log.error("############### Count:" + unitOfMeasureReactiveRepository.count().block().toString());
+        
     }
 
     private void loadCategories(){
