@@ -6,14 +6,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import aaluni.springframework.commands.RecipeCommand;
 import aaluni.springframework.converters.RecipeCommandToRecipe;
 import aaluni.springframework.converters.RecipeToRecipeCommand;
 import aaluni.springframework.domain.Recipe;
 import aaluni.springframework.repositories.RecipeRepository;
-import aaluni.springframework.services.RecipeService;
 
 import static org.junit.Assert.assertEquals;
 
@@ -52,6 +50,6 @@ public class RecipeServiceIT {
         assertEquals(NEW_DESCRIPTION, savedRecipeCommand.getDescription());
         assertEquals(testRecipe.getId(), savedRecipeCommand.getId());
         assertEquals(testRecipe.getCategories().size(), savedRecipeCommand.getCategories().size());
-        assertEquals(testRecipe.getIngredients().size(), savedRecipeCommand.getIngredients().size());
-    }
+		assertEquals(testRecipe.getIngredients().size(), savedRecipeCommand.getIngredients().size());
+	}
 }
