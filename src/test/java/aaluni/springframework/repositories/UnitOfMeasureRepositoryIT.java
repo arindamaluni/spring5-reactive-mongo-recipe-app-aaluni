@@ -1,15 +1,13 @@
 package aaluni.springframework.repositories;
 
+import aaluni.springframework.bootstrap.RecipeBootstrap;
+import aaluni.springframework.domain.UnitOfMeasure;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import aaluni.springframework.bootstrap.RecipeBootstrap;
-import aaluni.springframework.domain.UnitOfMeasure;
-import aaluni.springframework.repositories.reactive.UnitOfMeasureReactiveRepository;
 
 import java.util.Optional;
 
@@ -21,27 +19,29 @@ public class UnitOfMeasureRepositoryIT {
 
     @Autowired
     UnitOfMeasureRepository unitOfMeasureRepository;
+
     @Autowired
     CategoryRepository categoryRepository;
+
     @Autowired
     RecipeRepository recipeRepository;
-    @Autowired
-    UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
 
     @Before
     public void setUp() throws Exception {
-    	recipeRepository.deleteAll();
-    	categoryRepository.deleteAll();
-    	unitOfMeasureRepository.deleteAll();
-    	RecipeBootstrap bootstrapData = new RecipeBootstrap(categoryRepository, recipeRepository, unitOfMeasureRepository);
-    	bootstrapData.onApplicationEvent(null);
+
+        recipeRepository.deleteAll();
+        unitOfMeasureRepository.deleteAll();
+        categoryRepository.deleteAll();
+
+        RecipeBootstrap recipeBootstrap = new RecipeBootstrap(categoryRepository, recipeRepository, unitOfMeasureRepository);
+
+        recipeBootstrap.onApplicationEvent(null);
     }
 
     @Test
     public void findByDescription() throws Exception {
 
         Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
-        System.out.println(unitOfMeasureReactiveRepository.count().block()); 
 
         assertEquals("Teaspoon", uomOptional.get().getDescription());
     }
