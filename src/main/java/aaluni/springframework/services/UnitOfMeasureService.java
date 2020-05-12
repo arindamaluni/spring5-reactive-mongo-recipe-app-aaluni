@@ -1,10 +1,9 @@
 package aaluni.springframework.services;
 
-import java.util.Set;
-
 import aaluni.springframework.commands.UnitOfMeasureCommand;
+import reactor.core.publisher.Flux;
 
 public interface UnitOfMeasureService {
 
-    Set<UnitOfMeasureCommand> listAllUoms();
+    Flux<UnitOfMeasureCommand> listAllUoms();
 }
